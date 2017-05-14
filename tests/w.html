@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="../gulp/bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="../gulp/bower_components/requirejs/require.js"></script>
+		<script type="text/javascript" src="../gulp/bower_components/underscore/underscore-min.js"></script>
+		<script type="text/javascript">
+			require.config = {
+				paths: {
+					"underscore": "../gulp/bower_components/underscore/underscore-min"
+				}
+			};			
+		</script>
+	</head>
+	<body>
+		<label>
+			Name <input type="text" data-type="name">
+		</label>
+		<br>
+		<label>
+			Age(18 - 100) <input type="text" data-type="age">
+		</label>
+		<br>
+		<label>
+			Description <input type="text" data-type="description">
+		</label>
+		<br>
+		<label>
+			Count <input type="text" data-type="count">
+		</label>
+		<br>
+		<label>
+			Price <input type="text" data-type="price">
+		</label>
+		<br>
+		<br>
+		<br>
+		<div id="result"></div>
+		<script>
+			requirejs(["../build/mario.js"],
+				function(Mario){
+					console.log(Mario);
+					Mario("test", {
+						name: "Nick",
+						age: {
+							value: 25,
+							validators: [
+								Mario.transforms("toIntNumber"),
+								Mario.filters("range", 18, 100)
+							]
+						},
+						description: {
+							value: ""
+						},
+						count: {
+							validators: Mario.transforms("toNumber"),
+							value: 0
+						},
+						price: {
+							validators: Mario.transforms("toNumber"),
+							value: 0
+						},
+						initData: {
+							deps: ["name", "age"],
+							constantValue: true,
+							construct: function(nick, age){
+								return "Init data:<br>	Nick: " + nick + ", Age:" + age + "<br><br>";
+							}
+						},
+						result: {
+							"react": {
+								fields: ["initData", "description", "price", "count", "age"],
+								compute: function(initData, description, price, count, age){
+									$("#result").html(initData + "Description: " + description + "<br><br>Age: " + age + "<br><br>Price: " + (price*count));
+								}
+							}
+						}
+					});
+
+
+				obj = Mario.mixin("test");
+
+
+				$("input").on("keyup", function(){
+					var $this = $(this),
+						type = $this.attr("data-type"),
+						val = $this.val();
+					obj.set(type, val);
+				});
+
+				}
+			)
+		</script>
+	</body>
+</html>

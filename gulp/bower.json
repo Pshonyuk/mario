@@ -1,0 +1,29 @@
+{
+  "name": "mario-library",
+  "description": "...",
+  "main": "gulpfile.js",
+  "authors": [
+    "Pshonyuk V. V."
+  ],
+  "license": "",
+  "keywords": [
+    "wap"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.1",
+    "qunit": "^1.22.0",
+    "requirejs": "^2.2.0",
+    "underscore": "^1.8.3"
+  }
+}
